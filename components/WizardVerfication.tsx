@@ -74,7 +74,7 @@ const WizardVerification = () => {
 
             <div>Traits: {idInput.hasValue
                 ? <div>
-                  {traits?.map(txt => <p>{txt}</p>)}
+                  {traits?.map((t,i) => <p key={i} >{t}</p>)}
               </div>
                 : `Enter Id`}</div>
             
