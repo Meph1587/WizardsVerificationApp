@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Account from "../components/Account";
 import ETHBalance from "../components/ETHBalance";
+import WizardVerification from "../components/WizardVerfication";
 import useEagerConnect from "../hooks/useEagerConnect";
 
 function Home() {
@@ -40,6 +41,7 @@ function Home() {
         {isConnected && (
           <section>
             <ETHBalance />
+            <WizardVerification />
           </section>
         )}
       </main>
