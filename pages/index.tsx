@@ -14,9 +14,9 @@ function Home() {
   const isConnected = typeof account === "string" && !!library;
 
   return (
-    <div>
+    <div style={{"backgroundColor":"black", "color":"white", "height":"150vh"}}>
       <Head>
-        <title>next-web3-boilerplate</title>
+        <title>The Forgotten Grimoire </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -28,14 +28,20 @@ function Home() {
 
       <main>
 
-        <div className="max-w-xl mx-auto">
-          <div className="p-4 rounded-2xl bg-purple-700 ring-2 ring-inset ring-purple-600">
-            <h1 className="text-2xl font-black leading-none">Forgotten Grimoire</h1>
+        <div>
+          <div>
+            <h1>The Forgotten Grimoire</h1>
+
+            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"70px"}}>
+              <i>
+                <b>Grimoire:</b>
+                A textbook of magic, typically including instructions on how to perform magical spells, charms and divination, and how to summon or invoke supernatural entities such as angels, spirits, deities and demons. 
+              </i>
+            </p>
           </div>
 
           {isConnected && (
             <section>
-              <ETHBalance />
               <WizardVerification />
             </section>
           )}

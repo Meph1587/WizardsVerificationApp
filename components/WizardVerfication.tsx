@@ -31,14 +31,10 @@ const WizardVerification = () => {
   let response = useFetch("https://api.opensea.io/api/v1/assets?owner="+ENSName+"&token_ids="+idInput?.value+"&asset_contract_address=0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42&order_direction=desc&offset=0&limit=20")
   
   async function verifyWizard() {
-    //const _id = toast.loading("Waiting for confirmation");
 
   const proofTraits = getProofForTraits(traits)
   const proofName = getProofForName(name)
 
-
-  
-  
     try {
       const transaction = await storageContract.storeWizardTraits(
         idInput?.value,
@@ -48,14 +44,9 @@ const WizardVerification = () => {
         proofTraits,
       );
 
-      //toast.loading(`Approve ${depositToken.symbol}`, { id: _id });
-
       await transaction.wait();
 
-      //toast.success(`Approve ${depositToken.symbol}`, { id: _id });
-
     } catch (error) {
-      //handleError(error, _id);
       console.log(error)
     }
   }
@@ -69,7 +60,6 @@ const WizardVerification = () => {
         required
         {...idInput.valueBind}
       />
-      <br></br>
 
       <Button
         onClick={verifyWizard}
@@ -84,8 +74,8 @@ const WizardVerification = () => {
 
       <br></br>
         
-      <h3 className="font-bold leading-none">
-        Name: {idInput.hasValue? <div>{name[1]}</div>: `Enter Id`}
+      <h3 style={{"marginTop":50}}>
+        {idInput.hasValue? <div>{name[1]}</div>: `Enter Id`}
       </h3>
         
         <div>
@@ -98,12 +88,17 @@ const WizardVerification = () => {
               
           }
         </div>
-        <h3 className="font-bold leading-none">
+        <h3>
         Traits:
         </h3>
           <div>{idInput.hasValue? 
             <div>
-              {traits?.map((t,i) => <p key={i} >{t}</p>)}
+              <p> Background: {traits[1] != 7777 ? traits[1]:"None"}</p>
+              <p> Body: {traits[2] != 7777 ? traits[2]:"None"}</p>
+              <p> Familiar: {traits[3] != 7777 ? traits[3]:"None"}</p>
+              <p> Head: {traits[4] != 7777 ? traits[4]:"None"}</p>
+              <p> Rune: {traits[5] != 7777 ? traits[5]:"None"}</p>
+              <p> Prop: {traits[6] != 7777 ? traits[6]:"None"}</p>
             </div>
             : ``}
           </div>
