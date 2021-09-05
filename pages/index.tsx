@@ -22,28 +22,24 @@ function Home() {
 
       <header>
         <nav>
-          <Link href="/">
-            <a>next-web3-boilerplate</a>
-          </Link>
-
           <Account triedToEagerConnect={triedToEagerConnect} />
         </nav>
       </header>
 
       <main>
-        <h1>
-          Welcome to{" "}
-          <a href="https://github.com/mirshko/next-web3-boilerplate">
-            next-web3-boilerplate
-          </a>
-        </h1>
 
-        {isConnected && (
-          <section>
-            <ETHBalance />
-            <WizardVerification />
-          </section>
-        )}
+        <div className="max-w-xl mx-auto">
+          <div className="p-4 rounded-2xl bg-purple-700 ring-2 ring-inset ring-purple-600">
+            <h1 className="text-2xl font-black leading-none">Forgotten Grimoire</h1>
+          </div>
+
+          {isConnected && (
+            <section>
+              <ETHBalance />
+              <WizardVerification />
+            </section>
+          )}
+        </div>
       </main>
 
       <style jsx>{`

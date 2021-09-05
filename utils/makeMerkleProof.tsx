@@ -1,50 +1,42 @@
 const { MerkleTree } = require('merkletreejs')
 const keccak256 = require('keccak256')
-const wizardTraits = require("../data/WizardsToTraits.json");
-
+const wizardTraits = require("../data/traits.json");
+import { ethers } from "ethers";
 // Flat version for easier import
 
-export function getProofForTraits(traits:number[]){
-    let tree = makeTreeFromTraits(getFormattedTraits())
-    let formattedTraits = traits;
-    for (let _ = traits.length; _ < 6; _++){
-        formattedTraits.push(7777)
-    };
+export function getProofForTraits(traitsToProve:number[]){
+    let tree = makeTreeFromTraits(wizardTraits.traits)
 
-    return makeProof(tree, formattedTraits);
+    const leaf = keccak256(encode(traitsToProve))
+    const proof = tree.getHexProof(leaf, keccak256, { hashLeaves: true, sortPairs: true })
+    return proof
 }
 
-export function getWizardTraits(wizardId:string){
-   for(let i=0; i< wizardTraits.wizards.length; i++){
-       if(wizardTraits.wizards[i] == parseInt(wizardId)){
-        let formattedTraits = wizardTraits.traits[i];
-        for (let _ = wizardTraits.traits[i].length; _ < 6; _++){
-            formattedTraits.push(7777)
-        };
-        return formattedTraits;
-       }
-   }
+export function proofTraits(tree:any, traitsToProve:number[]){
+
+    const leaf = keccak256(encode(traitsToProve))
+    const proof = tree.getHexProof(leaf, keccak256, { hashLeaves: true, sortPairs: true })
+    return proof
 }
 
-// Fills all trait lists with "7777" up to 6 elements and adds wizardId
-function getFormattedTraits(): number[][]{
+export function getProofForName(name:string[]){
+    let tree = makeTreeFromNames(wizardTraits.names)
     
-    let wizards = wizardTraits.wizards;
-    let traitsRaw = wizardTraits.traits;
-
-    let traits = [];
-    for (let i=0; i< traitsRaw.length;i++){
-        let element = traitsRaw[i];
-        let filledElement = element;
-        for (let _ = element.length; _ < 6; _++){
-            filledElement.push(7777)
-        }
-        traitsRaw[i] = filledElement;
-        let id:number[] = [wizards[i]];
-        traits.push(id.concat(filledElement))
-    };
-    return traits;
+    let coder = new ethers.utils.AbiCoder();
+    const leaf = keccak256(coder.encode([ "uint256", "string memory" ], [ parseInt(name[0]),  name[1]]))
+    const proof = tree.getHexProof(leaf, keccak256, { hashLeaves: true, sortPairs: true })
+    return proof
 }
+
+
+export function proofName(tree:any, name:string[]){
+    
+    let coder = new ethers.utils.AbiCoder();
+    const leaf = keccak256(coder.encode([ "uint256", "string memory" ], [ parseInt(name[0]),  name[1]]))
+    const proof = tree.getHexProof(leaf, keccak256, { hashLeaves: true, sortPairs: true })
+    return proof
+}
+
 
 function encode(traits: number[]): any{
     let encoded = "0x0000"
@@ -60,21 +52,32 @@ function encode(traits: number[]): any{
     return encoded
 }
 
-function makeProof(tree:any, traits:number[]): any{
-
-    const leaf = keccak256(encode(traits))
-    const proof = tree.getHexProof(leaf, keccak256, { hashLeaves: true, sortPairs: true })
-    return proof
-}
-
 // Encode traits and build tree
-function makeTreeFromTraits(leaves:number[][]):any{
+export function makeTreeFromTraits(leaves:number[][]){
 
     const leavesEncoded = [];
     for(let i=0 ; i< leaves.length; i++){
         leavesEncoded.push(encode(leaves[i]));
     }
+
+    
     const tree = new MerkleTree(leavesEncoded, keccak256, { hashLeaves: true, sortPairs: true })
 
+    return tree;
+}
+
+
+// Encode traits and build tree
+export function makeTreeFromNames(leaves:string[][]){
+
+    const leavesEncoded = [];
+    let coder = new ethers.utils.AbiCoder();
+    for(let i=0 ; i< leaves.length; i++){
+        let name = leaves[i];
+        leavesEncoded.push(
+            coder.encode([ "uint256", "string memory" ], [ parseInt(name[0]),  name[1]])
+        );
+    }
+    const tree = new MerkleTree(leavesEncoded, keccak256, { hashLeaves: true, sortPairs: true })
     return tree;
 }

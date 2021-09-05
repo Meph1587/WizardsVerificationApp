@@ -39,9 +39,10 @@ export default function NumericalInput({
       // text-specific options
       type="text"
       pattern="^[0-9]*[.,]?[0-9]*$"
-      placeholder={placeholder || "0.0"}
+      placeholder={placeholder || "777"}
       minLength={1}
-      maxLength={79}
+      maxLength={4}
+      max={9999}
       spellCheck="false"
     />
   );

@@ -1,4 +1,4 @@
-import { Contract } from "@ethersproject/contracts";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 

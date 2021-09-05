@@ -4,11 +4,14 @@ import useWizardIsVerified from "../hooks/useWizardIsVerified";
 import useStorageContract from "../hooks/useWizardStorage";
 import useInput from "../hooks/useInput";
 import Button from "./button";
+import useENSName from "../hooks/useENSName";
+import {useFetch} from "../hooks/useFetch";
 import NumericalInput from "./numericalInput";
-import {getProofForTraits, getWizardTraits} from "../utils/makeMerkleProof";
+import {getProofForTraits, getProofForName} from "../utils/makeMerkleProof";
+const wizardTraits = require("../data/traits.json");
 import { useMemo, useState } from "react";
 
-const storageAddress = "0x78dd5d19Dc9FebD05459AA99886600Da910A13a9";
+const storageAddress = "0xe5a0b43035F0cf0b577d176Ffc9a3ff307205af3";
 
 const WizardVerification = () => {
   const { account } = useWeb3React<Web3Provider>();
@@ -20,20 +23,29 @@ const WizardVerification = () => {
 
   const {data: isVerified} =  useWizardIsVerified(idInput?.value, storageAddress);
 
-  let traits = getWizardTraits(idInput?.value)
-  const traitsWithId = [parseInt(idInput?.value)].concat(traits)
+  let traits = wizardTraits.traits[idInput?.value]
+  let name = wizardTraits.names[idInput?.value]
+  const ENSName = useENSName(account);
+
+
+  let response = useFetch("https://api.opensea.io/api/v1/assets?owner="+ENSName+"&token_ids="+idInput?.value+"&asset_contract_address=0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42&order_direction=desc&offset=0&limit=20")
   
   async function verifyWizard() {
     //const _id = toast.loading("Waiting for confirmation");
 
-  const proof = getProofForTraits(traitsWithId)
-  
+  const proofTraits = getProofForTraits(traits)
+  const proofName = getProofForName(name)
 
+
+  
+  
     try {
       const transaction = await storageContract.storeWizardTraits(
         idInput?.value,
-        traitsWithId,
-        proof
+        name[1],
+        traits,
+        proofName,
+        proofTraits,
       );
 
       //toast.loading(`Approve ${depositToken.symbol}`, { id: _id });
@@ -51,34 +63,51 @@ const WizardVerification = () => {
   return(
     <div className="flex-1">
           
-            <NumericalInput
-              name="wizardId"
-              id="wizardId"
-              required
-              {...idInput.valueBind}
-            />
-            <br></br>
+      <NumericalInput
+        name="wizardId"
+        id="wizardId"
+        required
+        {...idInput.valueBind}
+      />
+      <br></br>
 
-            <Button
-              onClick={verifyWizard}
-              disabled={
-                !(idInput.hasValue) ||isVerified 
-              }
-            >
-              {!isVerified ? idInput.hasValue 
-                ? `Verify`
-                : `Enter Id`: "already Verified"}
-            </Button>
+      <Button
+        onClick={verifyWizard}
+        disabled={
+          !(idInput.hasValue) ||isVerified 
+        }
+      >
+        {!isVerified ? idInput.hasValue 
+          ? `Verify`
+          : `Enter Id`: "already Verified"}
+      </Button>
 
-            <br></br>
-
-            <div>Traits: {idInput.hasValue
-                ? <div>
-                  {traits?.map((t,i) => <p key={i} >{t}</p>)}
-              </div>
-                : `Enter Id`}</div>
-            
+      <br></br>
+        
+      <h3 className="font-bold leading-none">
+        Name: {idInput.hasValue? <div>{name[1]}</div>: `Enter Id`}
+      </h3>
+        
+        <div>
+          {
+            response?.assets ?  
+              <div>
+              <img src={response?.assets[0].image_url} alt=""/>
+             </div>:
+             idInput.hasValue? <div> Loading...</div>: ''
+              
+          }
+        </div>
+        <h3 className="font-bold leading-none">
+        Traits:
+        </h3>
+          <div>{idInput.hasValue? 
+            <div>
+              {traits?.map((t,i) => <p key={i} >{t}</p>)}
+            </div>
+            : ``}
           </div>
+    </div>
   );
 };
 
