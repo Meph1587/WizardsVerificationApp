@@ -24,10 +24,10 @@ function Home() {
         <nav>
           <Account triedToEagerConnect={triedToEagerConnect} />
         </nav>
+      
       </header>
 
       <main>
-
         <div  style={{"marginTop":"-50px"}} >
           <div>
             <h1>The Forgotten Grimoire</h1>
