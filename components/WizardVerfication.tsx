@@ -88,11 +88,11 @@ const WizardVerification = () => {
               
           }
         </div>
-        <h3>
-        Traits:
-        </h3>
           <div>{idInput.hasValue? 
             <div>
+              <h3>
+              Traits:
+              </h3>
               <p> Background: {traits[1] != 7777 ? traits[1]:"None"}</p>
               <p> Body: {traits[2] != 7777 ? traits[2]:"None"}</p>
               <p> Familiar: {traits[3] != 7777 ? traits[3]:"None"}</p>
