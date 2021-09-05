@@ -74,7 +74,7 @@ const WizardVerification = () => {
 
       <br></br>
         
-      <h3 style={{"marginTop":50}}>
+      <h3 style={{"marginTop":30}}>
         {idInput.hasValue? <div>{name[1]}</div>: `Enter Id`}
       </h3>
         

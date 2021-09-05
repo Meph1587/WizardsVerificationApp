@@ -28,11 +28,11 @@ function Home() {
 
       <main>
 
-        <div>
+        <div  style={{"marginTop":"-50px"}} >
           <div>
             <h1>The Forgotten Grimoire</h1>
 
-            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"70px"}}>
+            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"50px"}}>
               <i>
                 <b>Grimoire:</b>
                 A textbook of magic, typically including instructions on how to perform magical spells, charms and divination, and how to summon or invoke supernatural entities such as angels, spirits, deities and demons. 

@@ -83,14 +83,16 @@ const Account = ({ triedToEagerConnect }: Props) => {
   }
 
   return (
-    <a
+    <a style={{"padding":"20px"}}
       {...{
         href: formatEtherscanLink("Account", [chainId, account]),
         target: "_blank",
         rel: "noopener noreferrer",
       }}
     >
-      {ENSName || `${shortenHex(account, 4)}`}
+      {ENSName || account}   
+            <p style={{"fontSize": "75%"}}
+            ><i>Rinkeby Only!</i></p>
     </a>
   );
 };
