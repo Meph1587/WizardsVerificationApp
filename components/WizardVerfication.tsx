@@ -97,8 +97,8 @@ const WizardVerification = () => {
               <p> Body: {traits[2] != 7777 ? traits[2]:"None"}</p>
               <p> Familiar: {traits[3] != 7777 ? traits[3]:"None"}</p>
               <p> Head: {traits[4] != 7777 ? traits[4]:"None"}</p>
-              <p> Rune: {traits[5] != 7777 ? traits[5]:"None"}</p>
-              <p> Prop: {traits[6] != 7777 ? traits[6]:"None"}</p>
+              <p> Prop: {traits[5] != 7777 ? traits[5]:"None"}</p>
+              <p> Rune: {traits[6] != 7777 ? traits[6]:"None"}</p>
             </div>
             : ``}
           </div>
