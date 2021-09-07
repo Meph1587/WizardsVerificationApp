@@ -91,12 +91,12 @@ const Account = ({ triedToEagerConnect }: Props) => {
       }}
     >
       {ENSName || account}   
-            <p style={{"fontSize": "75%"}}
+            <p style={{"fontSize": "80%"}}
             ><i>Rinkeby Only!</i></p>
             <a
               href="https://rinkeby.etherscan.io/address/0xe5a0b43035f0cf0b577d176ffc9a3ff307205af3#readContract"
             >
-              <u>Contract of Etherscan</u>
+              <u>Contract on Etherscan</u>
             </a>
     </a>
   );
