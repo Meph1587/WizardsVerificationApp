@@ -30,7 +30,7 @@ function Home() {
       <main>
         <div  style={{"marginTop":"-50px"}} >
           <div>
-            <h1>The Forgotten Grimoire</h1>
+            <h1>The Lost Grimoire</h1>
 
             <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"50px"}}>
               <i>
