@@ -16,7 +16,7 @@ function Home() {
   return (
     <div style={{"backgroundColor":"black", "color":"white", "height":"150vh"}}>
       <Head>
-        <title>The Forgotten Grimoire </title>
+        <title>The Lost Grimoire </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -34,9 +34,8 @@ function Home() {
 
             <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"50px"}}>
               <i>
-                <b>Grimoire:</b>
-                A textbook of magic, typically including instructions on how to perform magical spells, charms and divination, and how to summon or invoke supernatural entities such as angels, spirits, deities and demons. 
-              </i>
+                <b>Verify Your wizard!</b>
+               </i>
             </p>
           </div>
 
