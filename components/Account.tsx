@@ -55,7 +55,7 @@ const Account = ({ triedToEagerConnect }: Props) => {
     return (
       <div>
         {hasMetaMaskOrWeb3Available ? (
-          <button
+          <button  style={{"marginLeft":"10px", "marginTop":"10px","padding":"5px", "color":"white", "backgroundColor": "black", "border":"solid", "borderBlockColor": "white"}}
             onClick={() => {
               setConnecting(true);
 
@@ -92,9 +92,9 @@ const Account = ({ triedToEagerConnect }: Props) => {
     >
       {ENSName || account}   
             <p style={{"fontSize": "80%"}}
-            ><i>Rinkeby Only!</i></p>
+            ><i> --- Rinkeby Only! --- </i></p>
             <a
-              href="https://rinkeby.etherscan.io/address/0xe5a0b43035f0cf0b577d176ffc9a3ff307205af3#readContract"
+              href="https://rinkeby.etherscan.io/address/0x11398bf5967Cd37BC2482e0f4E111cb93D230B05#readContract"
             >
               <u>Contract on Etherscan</u>
             </a>
