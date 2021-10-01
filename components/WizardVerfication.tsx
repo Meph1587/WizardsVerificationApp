@@ -11,7 +11,7 @@ import {getProofForTraits, getProofForName} from "../utils/makeMerkleProof";
 const wizardTraits = require("../data/traits.json");
 import { useMemo, useState } from "react";
 
-const storageAddress = "0xe5a0b43035F0cf0b577d176Ffc9a3ff307205af3";
+const storageAddress = "0x11398bf5967Cd37BC2482e0f4E111cb93D230B05";
 
 const WizardVerification = () => {
   const { account } = useWeb3React<Web3Provider>();
