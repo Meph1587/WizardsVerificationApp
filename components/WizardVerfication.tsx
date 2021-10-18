@@ -13,22 +13,19 @@ import { useMemo, useState } from "react";
 
 const storageAddress = "0x11398bf5967Cd37BC2482e0f4E111cb93D230B05";
 
-const WizardVerification = () => {
+const WizardVerification = ({ wizardId }) => {
   const { account } = useWeb3React<Web3Provider>();
-
-  const idInput = useInput("");
-
 
   const storageContract = useStorageContract(storageAddress);
 
-  const {data: isVerified} =  useWizardIsVerified(idInput?.value, storageAddress);
+  const {data: isVerified} =  useWizardIsVerified(wizardId, storageAddress);
 
-  let traits = wizardTraits.traits[idInput?.value]
-  let name = wizardTraits.names[idInput?.value]
+  let traits = wizardTraits.traits[wizardId]
+  let name = wizardTraits.names[wizardId]
   const ENSName = useENSName(account);
 
 
-  let response = useFetch("https://api.opensea.io/api/v1/assets?owner="+ENSName+"&token_ids="+idInput?.value+"&asset_contract_address=0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42&order_direction=desc&offset=0&limit=20")
+  let response = useFetch("https://api.opensea.io/api/v1/assets?owner="+ENSName+"&token_ids="+wizardId+"&asset_contract_address=0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42&order_direction=desc&offset=0&limit=20")
   
   async function verifyWizard() {
 
@@ -37,7 +34,7 @@ const WizardVerification = () => {
 
     try {
       const transaction = await storageContract.storeWizardTraits(
-        idInput?.value,
+        wizardId,
         name[1],
         traits,
         proofName,
@@ -58,16 +55,16 @@ const WizardVerification = () => {
         name="wizardId"
         id="wizardId"
         required
-        {...idInput.valueBind}
+        {... wizardId}
       />
 
       <Button
         onClick={verifyWizard}
         disabled={
-          !(idInput.hasValue) ||isVerified 
+          !(wizardId) ||isVerified 
         }
       >
-        {!isVerified ? idInput.hasValue 
+        {!isVerified ? wizardId
           ? `Verify`
           : `Enter Id`: "already Verified"}
       </Button>
@@ -75,7 +72,7 @@ const WizardVerification = () => {
       <br></br>
         
       <h3 style={{"marginTop":30}}>
-        {idInput.hasValue? <div>{name[1]}</div>: `Enter Id`}
+        {wizardId? <div>{name[1]}</div>: `Enter Id`}
       </h3>
         
         <div>
@@ -84,11 +81,11 @@ const WizardVerification = () => {
               <div>
               <img src={response?.assets[0].image_url} alt=""/>
              </div>:
-             idInput.hasValue? <div> Loading...</div>: ''
+             wizardId? <div> Loading...</div>: ''
               
           }
         </div>
-          <div>{idInput.hasValue? 
+          <div>{wizardId? 
             <div>
               <h3>
               Traits:

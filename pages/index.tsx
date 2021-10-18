@@ -20,28 +20,23 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <nav>
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      
-      </header>
-
       <main>
-        <div  style={{"marginTop":"-50px"}} >
+        <div  style={{"marginTop": "20px"}} >
           <div>
             <h1>The Lost Grimoire</h1>
 
-            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"50px"}}>
+            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"0px", "marginTop": "-20px"}}>
               <i>
-                <b>Verify Your wizard!</b>
+                <b>Verify Your Wizard!</b>
                </i>
             </p>
           </div>
-
+          <nav>
+          <Account triedToEagerConnect={triedToEagerConnect} />
+          </nav>
           {isConnected && (
             <section>
-              <WizardVerification />
+              <WizardVerification wizardId={408}/>
             </section>
           )}
         </div>
