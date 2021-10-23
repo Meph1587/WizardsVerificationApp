@@ -79,15 +79,9 @@ function WizardList() {
     async function run() {
       const tokens: any = [];
       try {
-        const result = await wizardsContract.tokensOfOwner('0x8D12B8c3bEf358d1901d891a74FA801aBa2b79B0');
+        const result = await wizardsContract.tokensOfOwner(account);
 
         result.forEach((element: any) => {
-          tokens.push(Number(element._hex));
-        });
-
-        const result1 = await wizardsContract.tokensOfOwner('0x117F35CD8051fc96dA42CF026FEa95B924A5c7C4');
-
-        result1.forEach((element: any) => {
           tokens.push(Number(element._hex));
         });
 
