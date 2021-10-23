@@ -29,11 +29,11 @@ function Home() {
       </Head>
 
       <main>
-        <div  style={{"marginTop": "20px"}} >
+        <div  style={{"marginTop": "-0.4em"}} >
           <div>
-            <h1>The Lost Grimoire</h1>
+            <h1 style={{"fontSize": "3.4em"}}>The Lost Grimoire</h1>
 
-            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"20px", "marginTop": "-20px"}}>
+            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"0.5em", "marginTop": "-20px"}}>
               <i>
                 <b>Verify Your Wizard!</b>
                </i>

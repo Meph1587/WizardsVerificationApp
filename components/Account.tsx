@@ -53,11 +53,13 @@ function WizardGrid({
   return (
         <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
         {wizards.map((wizard: any) => (
-          <div style={{"backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "125px", "height": "125px", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
-          <h3 style={{"fontSize": "5px", "marginRight": "29px", "marginLeft": "29px", "marginTop": "2px"}}> {wizardTraits['names'][wizard][1]}</h3>
+          <div style={{"backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "12em", "height": "12em", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
+          <div style={{ "marginRight": "2.8em", "marginLeft": "3em", "height": "1.8em", "display": "flex", "alignItems": "center"}}>
+            <h3 style={{"fontSize": "0.6em", "fontFamily": "Alagard", "color": "rgb(223, 209, 168)"}}> {wizardTraits['names'][wizard][1]}</h3>
+          </div>
           <img
             src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizard + ".png"}
-            style={{"width":"90px", "height":"90px"}}
+            style={{"width":"9em", "height":"9em"}}
             onClick={
                 () => {
                 setWizard(wizard);
@@ -77,13 +79,17 @@ function WizardList() {
     async function run() {
       const tokens: any = [];
       try {
-        const result = await wizardsContract.tokensOfOwner(account);
+        const result = await wizardsContract.tokensOfOwner('0x8D12B8c3bEf358d1901d891a74FA801aBa2b79B0');
 
         result.forEach((element: any) => {
           tokens.push(Number(element._hex));
         });
 
-        console.log('test');
+        const result1 = await wizardsContract.tokensOfOwner('0x117F35CD8051fc96dA42CF026FEa95B924A5c7C4');
+
+        result1.forEach((element: any) => {
+          tokens.push(Number(element._hex));
+        });
 
       } catch (err) {
         console.log("err: ", err);
@@ -141,7 +147,7 @@ function WizardList() {
   }
 
   return (
-    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "maxHeight": "520px", "maxWidth": "60%", "overflow": "scroll"}}>
+    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "marginBottom": "1em", "maxHeight": "49em", "maxWidth": "75%", "overflow": "scroll"}}>
       <WizardList/>   
     </div>
   );
