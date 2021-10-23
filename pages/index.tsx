@@ -5,6 +5,12 @@ import Account from "../components/Account";
 import ETHBalance from "../components/ETHBalance";
 import WizardVerification from "../components/WizardVerfication";
 import useEagerConnect from "../hooks/useEagerConnect";
+import create from 'zustand';
+
+export const useStore = create(set => ({
+  wizard: 0,
+  setWizard: (id) => set(state => ({ wizard: id }))
+}))
 
 function Home() {
   const { account, library } = useWeb3React();
@@ -12,6 +18,8 @@ function Home() {
   const triedToEagerConnect = useEagerConnect();
 
   const isConnected = typeof account === "string" && !!library;
+
+  const wizard = useStore(state => state.wizard);
 
   return (
     <div style={{"backgroundColor":"black", "color":"white", "height":"150vh"}}>
@@ -25,7 +33,7 @@ function Home() {
           <div>
             <h1>The Lost Grimoire</h1>
 
-            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"0px", "marginTop": "-20px"}}>
+            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"20px", "marginTop": "-20px"}}>
               <i>
                 <b>Verify Your Wizard!</b>
                </i>
@@ -36,9 +44,18 @@ function Home() {
           </nav>
           {isConnected && (
             <section>
-              <WizardVerification wizardId={408}/>
+              <WizardVerification wizardId={wizard}/>
             </section>
           )}
+          <div style={{"bottom": "20px", "position": "relative"}}>
+            <p style={{"fontSize": "80%"}}
+              ><i> --- Rinkeby Only! --- </i></p>
+              <a
+                href="https://rinkeby.etherscan.io/address/0x11398bf5967Cd37BC2482e0f4E111cb93D230B05#readContract"
+              >
+                <u>Contract on Etherscan</u>
+              </a>
+          </div>
         </div>
       </main>
 

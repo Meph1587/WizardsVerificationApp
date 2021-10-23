@@ -7,6 +7,7 @@ import useENSName from "../hooks/useENSName";
 import useContract from "../hooks/useContract";
 import { formatEtherscanLink, shortenHex } from "../util";
 import { abi as ForgottenRunesWizardsCultAbi } from "../contracts/ForgottenRunesWizardsCult.json";
+import { useStore } from "../pages/index";
 
 type Props = {
   triedToEagerConnect: boolean;
@@ -40,27 +41,30 @@ const Account = ({ triedToEagerConnect }: Props) => {
 
 const ENSName = useENSName(account);
 const wizardsContract = useContract("0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42", ForgottenRunesWizardsCultAbi);
-var selectedWiz = 0;
+const wizardTraits = require("../data/traits.json");
 
 function WizardGrid({
   wizards
 }: {
   wizards: any[];
 }) {
+  const setWizard = useStore(state => state.setWizard);
+
   return (
-        <div>
+        <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
         {wizards.map((wizard: any) => (
+          <div style={{"backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "125px", "height": "125px", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
+          <h3 style={{"fontSize": "5px", "marginRight": "29px", "marginLeft": "29px", "marginTop": "2px"}}> {wizardTraits['names'][wizard][1]}</h3>
           <img
             src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizard + ".png"}
-            style={{"width":"100px", "height":"100px"}}
+            style={{"width":"90px", "height":"90px"}}
             onClick={
                 () => {
-                //console.log(wizard);
-                selectedWiz = wizard;
-                console.log(selectedWiz);
+                setWizard(wizard);
               }
             }
           />
+          </div>
         ))}
         </div>
   );
@@ -78,6 +82,8 @@ function WizardList() {
         result.forEach((element: any) => {
           tokens.push(Number(element._hex));
         });
+
+        console.log('test');
 
       } catch (err) {
         console.log("err: ", err);
@@ -135,15 +141,8 @@ function WizardList() {
   }
 
   return (
-    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto"}}>
+    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "maxHeight": "520px", "maxWidth": "60%", "overflow": "scroll"}}>
       <WizardList/>   
-            <p style={{"fontSize": "80%"}}
-            ><i> --- Rinkeby Only! --- </i></p>
-            <a
-              href="https://rinkeby.etherscan.io/address/0x11398bf5967Cd37BC2482e0f4E111cb93D230B05#readContract"
-            >
-              <u>Contract on Etherscan</u>
-            </a>
     </div>
   );
 };

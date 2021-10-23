@@ -51,13 +51,6 @@ const WizardVerification = ({ wizardId }) => {
   return(
     <div className="flex-1">
           
-      <NumericalInput
-        name="wizardId"
-        id="wizardId"
-        required
-        {... wizardId}
-      />
-
       <Button
         onClick={verifyWizard}
         disabled={
@@ -66,13 +59,13 @@ const WizardVerification = ({ wizardId }) => {
       >
         {!isVerified ? wizardId
           ? `Verify`
-          : `Enter Id`: "already Verified"}
+          : `Verify`: "already Verified"}
       </Button>
 
       <br></br>
         
       <h3 style={{"marginTop":30}}>
-        {wizardId? <div>{name[1]}</div>: `Enter Id`}
+        {wizardId? <div>{name[1]}</div>: `Select Wizard`}
       </h3>
         
         <div>
@@ -85,7 +78,7 @@ const WizardVerification = ({ wizardId }) => {
               
           }
         </div>
-          <div>{wizardId? 
+          <div style={{"marginBottom": "50px"}}>{wizardId? 
             <div>
               <h3>
               Traits:
