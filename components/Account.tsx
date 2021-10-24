@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import MetaMaskOnboarding from "@metamask/onboarding";
 import { useWeb3React } from "@web3-react/core";
 import { UserRejectedRequestError } from "@web3-react/injected-connector";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { injected } from "../connectors";
 import useENSName from "../hooks/useENSName";
 import useContract from "../hooks/useContract";
@@ -45,59 +46,6 @@ const wizardsContract = useContract("0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42"
 const storageContract = useContract("0x11398bf5967Cd37BC2482e0f4E111cb93D230B05", WizardStorage_ABI);
 const wizardTraits = require("../data/traits.json");
 const verified = {};
-
-function WizardGrid({
-  wizards
-}: {
-  wizards: any[];
-}) {
-  const setWizard = useStore(state => state.setWizard);
-
-  return (
-        <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
-        {wizards.map((wizard: any) => (
-          <div key={wizard} style={{"opacity": verified[wizard] ? "50%":"100%", "backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "12em", "height": "12em", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
-          <div style={{ "marginRight": "2.8em", "marginLeft": "3em", "height": "1.8em", "display": "flex", "alignItems": "center"}}>
-            <h3 style={{"fontSize": "0.6em", "fontFamily": "Alagard", "color": "rgb(223, 209, 168)"}}> {wizardTraits['names'][wizard][1]}</h3>
-          </div>
-          <img
-            src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizard + ".png"}
-            style={{"width":"9em", "height":"9em"}}
-            onClick={
-                verified[wizard] ? undefined: () => { setWizard(wizard); }
-            }
-          />
-          </div>
-        ))}
-        </div>
-  );
-}
-
-function WizardList() {
-  const [wizards, setWizards] = useState([]);
-
-  useEffect(() => {
-    async function run() {
-      const tokens: any = [];
-      try {
-        const result = await wizardsContract.tokensOfOwner(account);
-
-        for (var element of result) {
-          tokens.push(Number(element._hex));
-          const balance = await storageContract.hasTraitsStored(Number(element._hex));
-          verified[Number(element._hex)] = balance;
-        }
-
-      } catch (err) {
-        console.log("err: ", err);
-      }
-      setWizards(tokens);
-    }
-    run();
-  }, []);
-
-  return <WizardGrid wizards={wizards}/>
-}
 
   if (error) {
     return null;
@@ -145,9 +93,62 @@ function WizardList() {
 
   return (
     <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "marginBottom": "1em", "maxHeight": "49em", "maxWidth": "75%", "overflow": "scroll"}}>
-      <WizardList/>   
+      <WizardList wizardsContract={wizardsContract} account={account} storageContract={storageContract} verified={verified} wizardTraits={wizardTraits}/>   
     </div>
   );
 };
+
+
+const WizardGrid = ({wizards, verified, wizardTraits}) => {
+  const setWizard = useStore(state => state.setWizard);
+
+  return (
+        <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
+        {wizards.map((wizard: any) => (
+          <div key={wizard} style={{"opacity": verified[wizard] ? "50%":"100%", "backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "12em", "height": "12em", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
+          <div style={{ "marginRight": "2.8em", "marginLeft": "3em", "height": "1.8em", "display": "flex", "alignItems": "center"}}>
+            <h3 style={{"fontSize": "0.6em", "fontFamily": "Alagard", "color": "rgb(223, 209, 168)"}}> {wizardTraits['names'][wizard][1]}</h3>
+          </div>
+          <img
+            src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizard + ".png"}
+            style={{"width":"9em", "height":"9em"}}
+            onClick={
+                verified[wizard] ? undefined: () => { setWizard(wizard); }
+            }
+            alt="Wizard"
+          />
+          </div>
+        ))}
+        </div>
+  );
+}
+
+
+const WizardList = ( {wizardsContract, account, storageContract, verified, wizardTraits}) => {
+  const [wizards, setWizards] = useState([]);
+
+  const run = useCallback(async () => {
+    const tokens: any = [];
+    try {
+      const result = await wizardsContract.tokensOfOwner(account);
+
+      for (var element of result) {
+        tokens.push(Number(element._hex));
+        const balance = await storageContract.hasTraitsStored(Number(element._hex));
+        verified[Number(element._hex)] = balance;
+      }
+
+    } catch (err) {
+      console.log("err: ", err);
+    }
+    setWizards(tokens);
+  } ,[account, storageContract, verified, wizardsContract])
+  
+  useEffect(() => {
+    run();
+  }, [run]);
+
+  return <WizardGrid wizards={wizards} verified={verified} wizardTraits={wizardTraits}/>
+}
 
 export default Account;
