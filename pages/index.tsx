@@ -22,7 +22,7 @@ function Home() {
   const wizard = useStore(state => state.wizard);
 
   return (
-    <div style={{"backgroundColor":"black", "color":"white", "height":"150vh"}}>
+    <div style={{"backgroundColor":"black", "color":"white", "height":"100%", "overflow": "scroll"}}>
       <Head>
         <title>The Lost Grimoire </title>
         <link rel="icon" href="/favicon.ico" />

@@ -6,6 +6,7 @@ import { injected } from "../connectors";
 import useENSName from "../hooks/useENSName";
 import useContract from "../hooks/useContract";
 import { formatEtherscanLink, shortenHex } from "../util";
+import WizardStorage_ABI from "../contracts/WizardStorage.json";
 import { abi as ForgottenRunesWizardsCultAbi } from "../contracts/ForgottenRunesWizardsCult.json";
 import { useStore } from "../pages/index";
 
@@ -41,7 +42,9 @@ const Account = ({ triedToEagerConnect }: Props) => {
 
 const ENSName = useENSName(account);
 const wizardsContract = useContract("0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42", ForgottenRunesWizardsCultAbi);
+const storageContract = useContract("0x11398bf5967Cd37BC2482e0f4E111cb93D230B05", WizardStorage_ABI);
 const wizardTraits = require("../data/traits.json");
+const verified = {};
 
 function WizardGrid({
   wizards
@@ -53,7 +56,7 @@ function WizardGrid({
   return (
         <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
         {wizards.map((wizard: any) => (
-          <div style={{"backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "12em", "height": "12em", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
+          <div key={wizard} style={{"opacity": verified[wizard] ? "50%":"100%", "backgroundImage": "url('/frame.png')", "backgroundSize": "cover", "width": "12em", "height": "12em", "display": "flex", "flexDirection": "column", "alignContent": "center", "justifyContent": "flex-start", "alignItems": "center"}}>
           <div style={{ "marginRight": "2.8em", "marginLeft": "3em", "height": "1.8em", "display": "flex", "alignItems": "center"}}>
             <h3 style={{"fontSize": "0.6em", "fontFamily": "Alagard", "color": "rgb(223, 209, 168)"}}> {wizardTraits['names'][wizard][1]}</h3>
           </div>
@@ -61,9 +64,7 @@ function WizardGrid({
             src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizard + ".png"}
             style={{"width":"9em", "height":"9em"}}
             onClick={
-                () => {
-                setWizard(wizard);
-              }
+                verified[wizard] ? undefined: () => { setWizard(wizard); }
             }
           />
           </div>
@@ -81,9 +82,11 @@ function WizardList() {
       try {
         const result = await wizardsContract.tokensOfOwner(account);
 
-        result.forEach((element: any) => {
+        for (var element of result) {
           tokens.push(Number(element._hex));
-        });
+          const balance = await storageContract.hasTraitsStored(Number(element._hex));
+          verified[Number(element._hex)] = balance;
+        }
 
       } catch (err) {
         console.log("err: ", err);
