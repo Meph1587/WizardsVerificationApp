@@ -64,7 +64,7 @@ const verified = {};
     return (
       <div style={{"marginLeft":"auto", "marginRight":"auto"}}>
         {hasMetaMaskOrWeb3Available ? (
-          <button  style={{"marginLeft":"10px", "marginTop":"10px","padding":"5px", "color":"white", "backgroundColor": "black", "border":"solid", "borderBlockColor": "white"}}
+          <button  style={{"marginLeft":"10px", "marginTop":"20px", "marginBottom": "100px", "padding":"5px", "color":"white", "backgroundColor": "black", "border":"solid", "borderBlockColor": "white"}}
             onClick={() => {
               setConnecting(true);
 
@@ -92,7 +92,7 @@ const verified = {};
   }
 
   return (
-    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "marginBottom": "1em", "maxHeight": "49em", "maxWidth": "75%", "overflow": "scroll"}}>
+    <div style={{"padding":"20px", "marginLeft": "auto", "marginRight": "auto", "marginBottom": "1em", "maxHeight": "49em", "overflow": "scroll"}}>
       <WizardList wizardsContract={wizardsContract} account={account} storageContract={storageContract} verified={verified} wizardTraits={wizardTraits}/>   
     </div>
   );

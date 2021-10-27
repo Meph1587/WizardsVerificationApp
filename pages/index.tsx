@@ -5,12 +5,30 @@ import Account from "../components/Account";
 import ETHBalance from "../components/ETHBalance";
 import WizardVerification from "../components/WizardVerfication";
 import useEagerConnect from "../hooks/useEagerConnect";
+import ReactTooltip from 'react-tooltip';
 import create from 'zustand';
 
 export const useStore = create(set => ({
   wizard: 0,
+  verifying: false,
+  setVerifying: (verify) => set(state => ({ verifying: verify })),
   setWizard: (id) => set(state => ({ wizard: id }))
 }))
+
+const Verifying = ({verifying}) => {
+
+  const wizard = useStore(state => state.wizard);
+
+  if (!verifying) {
+    return (null)
+  } else {
+    return (
+      <div style={{"position": "absolute", "top": "10em", "bottom": "0", "left": "0", "right": "0", "marginLeft" : "auto", "marginRight": "auto", "width": "50em", "height": "20em", "background": "#000000e3", "display": "flex", "flexDirection": "column", "justifyContent": "center"}}>
+      <div className="loading">Verifying Wizard #{wizard}</div>
+      </div>
+    )
+  }
+}
 
 function Home() {
   const { account, library } = useWeb3React();
@@ -20,6 +38,7 @@ function Home() {
   const isConnected = typeof account === "string" && !!library;
 
   const wizard = useStore(state => state.wizard);
+  const verifying = useStore(state => state.verifying);
 
   return (
     <div style={{"backgroundColor":"black", "color":"white", "height":"100%", "overflow": "scroll"}}>
@@ -29,11 +48,11 @@ function Home() {
       </Head>
 
       <main>
-        <div  style={{"marginTop": "-0.4em"}} >
+        <div  style={{"marginTop": "-0.4em", "display": "flex", "flexDirection": "column", "alignItems": "stretch", "flexWrap": "wrap"}} >
           <div>
             <h1 style={{"fontSize": "3.4em"}}>The Lost Grimoire</h1>
 
-            <p style={{"width":"50%", "marginLeft":"25%","marginBottom":"0.5em", "marginTop": "-20px"}}>
+            <p style={{"width":"100%", "marginLeft":"auto", "marginRight": "auto", "marginBottom":"0.5em", "marginTop": "-20px"}}>
               <i>
                 <b>Verify Your Wizard!</b>
                </i>
@@ -47,7 +66,10 @@ function Home() {
               <WizardVerification wizardId={wizard}/>
             </section>
           )}
-          <div style={{"bottom": "20px", "position": "relative"}}>
+          <Verifying verifying={verifying}/>
+          <div style={{"bottom": "30px", "position": "fixed", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>
+          <img style={{"width": "2em", "height": "2em"}} src="/question.png" data-tip="1. Connect Your Wallet 2. Select Your Wizard 3. Click verify and send transaction to verify your wizard's traits on the blockchain!"/>
+          <ReactTooltip/>
             <p style={{"fontSize": "80%"}}
               ><i> --- Rinkeby Only! --- </i></p>
               <a
