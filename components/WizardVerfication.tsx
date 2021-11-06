@@ -69,7 +69,7 @@ const WizardVerification = ({ wizardId }) => {
       </Button>
 
       <br></br>
-        <div style={{"display": "flex", "flexDirection": "row", "justifyContent": "center", "alignItems": "flex-end", "bottom": "0em", "position" : "relative"}}>
+        <div style={{"display": "flex", "flexDirection": "row", "justifyContent": "center", "alignItems": "flex-end", "bottom": "0em", "position" : "relative", "marginRight": "3em"}}>
           <div style={{"marginTop": "5em"}}>
             <div>
               <img src={"https://nftz.forgottenrunes.com/wizards/alt/400-nobg/wizard-" + wizardId + ".png"} alt=""/>

@@ -62,12 +62,12 @@ function Home() {
           <Account triedToEagerConnect={triedToEagerConnect} />
           </nav>
           {isConnected && (
-            <section>
+            <section style={{"flex": "auto"}}>
               <WizardVerification wizardId={wizard}/>
             </section>
           )}
           <Verifying verifying={verifying}/>
-          <div style={{}}>
+          <div>
           <img style={{"width": "2em", "height": "2em"}} src="/question.png" data-tip="1. Connect Your Wallet 2. Select Your Wizard 3. Click verify and send transaction to verify your wizard's traits on the blockchain!"/>
           <ReactTooltip/>
             <p style={{"fontSize": "80%"}}
