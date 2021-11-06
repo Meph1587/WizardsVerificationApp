@@ -48,8 +48,8 @@ function Home() {
       </Head>
 
       <main>
-        <div  style={{"marginTop": "-0.4em", "display": "flex", "flexDirection": "column", "alignItems": "stretch", "flexWrap": "wrap"}} >
-          <div>
+        <div style={{"display": "flex", "flexDirection": "column", "alignItems": "stretch", "height": "100vh", "padding": "2rem 2rem", "justifyContent": "space-between"}} >
+          <div style={{"marginTop": "-2em"}}>
             <h1 style={{"fontSize": "3.4em"}}>The Lost Grimoire</h1>
 
             <p style={{"width":"100%", "marginLeft":"auto", "marginRight": "auto", "marginBottom":"0.5em", "marginTop": "-20px"}}>
@@ -67,11 +67,11 @@ function Home() {
             </section>
           )}
           <Verifying verifying={verifying}/>
-          <div style={{"bottom": "30px", "position": "fixed", "left": "50%", "transform": "translateX(-50%)", "width": "100%"}}>
+          <div style={{}}>
           <img style={{"width": "2em", "height": "2em"}} src="/question.png" data-tip="1. Connect Your Wallet 2. Select Your Wizard 3. Click verify and send transaction to verify your wizard's traits on the blockchain!"/>
           <ReactTooltip/>
             <p style={{"fontSize": "80%"}}
-              ><i> --- Rinkeby Only! --- </i></p>
+              ><i> Contract by <a href="https://twitter.com/Mephistophy" target="_blank">Mephistopheles</a> ---- Website by <a href="https://twitter.com/tv3636" target="_blank">tv</a> </i></p>
               <a
                 href="https://rinkeby.etherscan.io/address/0x11398bf5967Cd37BC2482e0f4E111cb93D230B05#readContract"
               >
