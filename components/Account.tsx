@@ -100,7 +100,7 @@ const verified = {};
 
 
 const WizardGrid = ({wizards, verified, wizardTraits}) => {
-  const setWizard = useStore(state => state.setWizard);
+  const setWizard = useStore(state => setWizard);
 
   return (
         <div style={{"display": "flex", "flexDirection": "row", "flexWrap": "wrap", "alignContent": "center", "justifyContent": "center"}}>
