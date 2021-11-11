@@ -24,7 +24,7 @@ const WizardVerification = ({ wizardId }) => {
   let traits = wizardTraits.traits[wizardId]
   let name = wizardTraits.names[wizardId]
   const ENSName = useENSName(account);
-  const setVerifying = useStore(state => setVerifying);
+  const setVerifying = useStore(state => state.setVerifying);
 
 
   let response = useFetch("https://api.opensea.io/api/v1/assets?owner="+ENSName+"&token_ids="+wizardId+"&asset_contract_address=0x521f9c7505005cfa19a8e5786a9c3c9c9f5e6f42&order_direction=desc&offset=0&limit=20")
