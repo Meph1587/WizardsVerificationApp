@@ -1,9 +1,23 @@
+@font-face {
+  font-family: "Alagard";
+  src: url("/fonts/alagard.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "8bitoperator";
+  src: url("/fonts/8bitoperator.ttf") format("truetype");
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "8bitoperator";
+  background-color: black;
+}
+
+h1 {
+	font-family: "Alagard";
 }
 
 a {
@@ -13,4 +27,34 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  font-family: "8bitoperator";
+}
+
+.loading {
+  font-size: 30px;
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 1500ms infinite;      
+  animation: ellipsis steps(4,end) 1500ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
 }
