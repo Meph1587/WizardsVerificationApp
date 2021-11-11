@@ -8,12 +8,19 @@ import useEagerConnect from "../hooks/useEagerConnect";
 import ReactTooltip from 'react-tooltip';
 import create from 'zustand';
 
-export const useStore = create(set => ({
+type State = {
+  wizard: Number;
+  verifying: Boolean;
+  setVerifying: (verifying: Boolean) => void;
+  setWizard: (wizard: Number) => void;
+}
+
+export const useStore = create<State>(set => ({
   wizard: 0,
   verifying: false,
   setVerifying: (verify) => set(state => ({ verifying: verify })),
   setWizard: (id) => set(state => ({ wizard: id }))
-}))
+}));
 
 const Verifying = ({verifying}) => {
 
@@ -71,7 +78,7 @@ function Home() {
           <img style={{"width": "2em", "height": "2em"}} src="/question.png" data-tip="1. Connect Your Wallet 2. Select Your Wizard 3. Click verify and send transaction to verify your wizard's traits on the blockchain!"/>
           <ReactTooltip/>
             <p style={{"fontSize": "80%"}}
-              ><i> Contract by <a href="https://twitter.com/Mephistophy" target="_blank">Mephistopheles</a> ---- Website by <a href="https://twitter.com/tv3636" target="_blank">tv</a> </i></p>
+              ><i> Contract by <a href="https://twitter.com/Mephistophy" target="_blank" rel="noreferrer">Mephistopheles</a> ---- Website by <a href="https://twitter.com/tv3636" target="_blank" rel="noreferrer">tv</a> </i></p>
               <a
                 href="https://rinkeby.etherscan.io/address/0x11398bf5967Cd37BC2482e0f4E111cb93D230B05#readContract"
               >
